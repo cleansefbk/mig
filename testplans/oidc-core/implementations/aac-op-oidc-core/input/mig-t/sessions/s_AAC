@@ -1,0 +1,10 @@
+open | http://relying-party.org:4200|
+click | xpath=/html/body/div[2]/div/div/div/div/div/div/div/div/div/div[2]/div/span/a[1] |
+type | id=username | test
+type | id=password | test123
+click | xpath=/html/body/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div/form/div[3]/button |
+click | xpath=/html/body/div[2]/div/div/div/div/div/div/div/div/div/div[2]/div/span/a[6]|
+click | xpath=/html/body/div[2]/div/div/div/div/div/div/div/div/div/div[2]/div/span/a[5]|
+click | xpath=/html/body/div[2]/div/div[1]/div/div/div/div/div/div/div/div[2]/div/span/a[2] |
+click | xpath=/html/body/div/div/div/div[1]/div/div[2]/div[2]/form/div[2]/input[1] |
+wait | 100

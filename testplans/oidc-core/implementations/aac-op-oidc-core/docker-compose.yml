@@ -1,0 +1,75 @@
+version: "3"
+
+services:
+   burpsuite:
+    image: i-mig-t # Use this if you build locally
+    #image: ghcr.io/stfbk/mig-i-mig-t:latest
+    volumes:
+      - /tmp/.X11-unix/:/tmp/.X11-unix/
+      - /etc/localtime:/etc/localtime:ro
+      - "$HOME/.Xauthority:/root/.Xauthority:rw"
+      - ./config/mig-t/msg_def.json:/opt/BurpSuiteCommunity/msg_def.json
+      - ./logs/:/opt/BurpSuiteCommunity/logs # Log folder 
+    ports:
+      - 8080:8080
+      #- 5005:5005 # To enable java debugger
+    networks:
+      - oidclab
+    environment:
+      - DISPLAY
+      #- INSTALL4J_JAVA_HOME="/usr/lib/jvm/openjdk-11" # To enable java debugger
+      #- JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" # To enable java debugger
+    stdin_open: true
+    tty: true
+    
+   aac-provider.org:
+    image: aac # Use this if you build locally
+    volumes:
+      - ./config/aac/bootstrap.yaml:/var/bootstrap.yaml
+    expose:
+      - 8088
+    ports:
+      - "8088:8088"
+    networks:
+      - oidclab
+    privileged: true
+    command: |
+      bash -c "dpkg --configure -a
+      apt-get update
+      apt-get install iptables redsocks curl lynx -qy
+      echo 'base {log_debug = off;log_info = on;log = stderr;redirector = iptables;} redsocks {local_ip = localhost;local_port = 12345;ip = burpsuite;port = 8080;type = http-connect; }' > /etc/#redsocks.conf &&
+      /usr/sbin/redsocks -c /etc/redsocks.conf &
+      iptables -t nat -A OUTPUT -p tcp --dport 4200 -j REDIRECT --to-port 12345"
+    environment:
+      - ADMIN_PASSWORD=Lab2023
+      - SERVER_PORT=8088
+      - APPLICATION_EXT_URL=http://aac-provider.org:8088
+      - BOOTSTRAP=file:///var/bootstrap.yaml
+      - BOOTSTRAP_APPLY=true
+      - PROXY_SERVER=burpsuite
+      - PROXY_PORT=8080
+      
+   relying-party.org:
+    image: rp-java # Use this if you build locally
+    expose:
+      - 4200
+    ports:
+      - "4200:4200"
+    networks:
+      - oidclab
+    command: |
+      sh -c "apt-get update
+      apt-get install maven
+      apt-get install iptables redsocks curl lynx -qy
+      echo 'base {log_debug = on;log_info = on;log = stderr;redirector = iptables;} redsocks {local_ip = 0.0.0.0;local_port = 12345;ip = burpsuite;port = 8080;type = http-connect; }' > /etc/redsocks.conf &&
+      redsocks -c /etc/redsocks.conf &
+      iptables -t nat -A OUTPUT -p tcp --dport 8088 -j REDIRECT --to-port 12345 &&
+      mvn spring-boot:run"
+    privileged: true
+    environment:
+      - PROXY_SERVER=burpsuite
+      - PROXY_PORT=8080
+             
+networks:
+  oidclab:
+

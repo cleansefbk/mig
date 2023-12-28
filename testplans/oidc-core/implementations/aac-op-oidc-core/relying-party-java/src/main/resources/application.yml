@@ -1,0 +1,35 @@
+
+server:
+   port: 4200
+   error:
+      # This is an example project for developers. We could expose stacktrace
+      include-stacktrace: always
+
+client-credentials:
+   # prova di configurazione client-credentials
+   client-secret: "eSHUuN24ao3FfWRm7CJYnuiK98sjuRg8"
+   code-challenge: "-uE-LdYx2fzfr9CuTZ9LO-Xe5ZkugIvlYQdrNT9kKXY"
+   scopes: "openid offline_access email profile client.roles.me user.roles.me aac.api.users"
+   client-id: "test-0000-12345-client"
+   
+endpoints:
+   # prova di configurazione endpoints
+   host:
+      aac: aac-provider.org:8088
+      rp: relying-party.org:4200
+
+   authz-endpoint: "http://${endpoints.host.aac}/oauth/authorize"
+   token-endpoint: "http://${endpoints.host.aac}/oauth/token"
+   user-endpoint: "http://${endpoints.host.aac}/userinfo"
+   code-verifier: "Ux9otAaZ0NwI7nYsWrE-DTgDA4AecMOf3bn9bNNQnmk"
+   code-challenge: "-uE-LdYx2fzfr9CuTZ9LO-Xe5ZkugIvlYQdrNT9kKXY"
+   logout-endpoint: "http://${endpoints.host.aac}/endsession"
+   revoke-endpoint: "http://${endpoints.host.aac}/oauth/revoke"
+   introspect-endpoint: "http://${endpoints.host.aac}/oauth/introspect"
+   
+   redirect-endpoint: "http://${endpoints.host.rp}/oidc/rp/signin-callback"
+
+
+spring:
+   mvc:
+      static-path-pattern: /static/**

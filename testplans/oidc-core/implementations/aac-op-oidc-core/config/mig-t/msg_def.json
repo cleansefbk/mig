@@ -1,0 +1,212 @@
+{
+    "message_types": [
+        {
+            "name": "Authentication request",
+            "is request": true,
+            "response name": "Authentication no error response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check": "response_type",
+                    "is present": "true"
+                }
+            ]
+        },
+        {
+            "name": "Authentication error response",
+            "is request": false,
+            "checks": [
+                {
+                    "in": "head",
+                    "check param": "Location",
+                    "contains": "error_description="
+                },
+                {
+                    "in": "head",
+                    "check param": "Location",
+                    "contains": "error="
+                },
+                {
+                    "in": "head",
+                    "check param": "Location",
+                    "contains": "state="
+                }
+            ]
+        },
+        {
+            "name": "Authentication response",
+            "is request": false,
+            "checks": [
+                {
+                    "in": "head",
+                    "check param": "Location",
+                    "contains": "code="
+                },
+                {
+                    "in": "head",
+                    "check param": "Location",
+                    "contains": "state"
+                },
+                {
+                    "in": "head",
+                    "check param": "Location",
+                    "contains": "iss"
+                }
+            ]
+        },
+        {
+            "name": "Token request",
+            "is request": true,
+            "response name": "Token response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/token"
+                }
+            ]
+        },
+        {
+            "name": "Revocation request",
+            "is request": true,
+            "response name": "Revocation response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/oauth/revoke"
+                }
+            ]
+        },
+        {
+            "name": "Entity Configuration request RP",
+            "is request": true,
+            "response name": "Entity Configuration response RP",
+            "checks": [
+                {
+                    "in": "url",
+                    "check": "/.well-known/oauth-authorization-server",
+                    "is present": "true"
+                },
+                {
+                    "in": "head",
+                    "check param": "Host",
+                    "contains": "relying-party.org:4200"
+                }
+            ]
+        },
+        {
+            "name": "Entity Configuration request OP",
+            "is request": true,
+            "response name": "Entity Configuration response OP",
+            "checks": [
+                {
+                    "in": "url",
+                    "check": "/.well-known/oauth-authorization-server",
+                    "is present": "true"
+                },
+                {
+                    "in": "head",
+                    "check param": "Host",
+                    "contains": "aac-provider.org:8088"
+                }
+            ]
+        },
+        {
+            "name": "UserInfo request",
+            "is request": true,
+            "response name": "UserInfo response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/userinfo"
+                },
+                {
+                    "in": "head",
+                    "check param": "Authorization",
+                    "contains": "Bearer"
+                }
+            ]
+        },
+        {
+            "name": "Introspection request",
+            "is request": true,
+            "response name": "Introspection response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/oauth/introspect"
+                }
+            ]
+        },
+        {
+            "name": "Entity Statement request RP",
+            "is request": true,
+            "response name": "Entity Statement response RP",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/fetch\\?sub=http://relying-party\\.org:4200" 
+                }
+            ]
+        },
+        {
+            "name": "Entity Statement request OP",
+            "is request": true,
+            "response name": "Entity Statement response OP",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/fetch\\?sub=http://aac-provider.org:8088"
+                }
+            ]
+        },
+        {
+            "name": "Resolve Entity Statement request",
+            "is request": true,
+            "response name": "Resolve Entity Statement response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/resolve/\\?sub="
+                }
+            ]
+        },
+        {
+            "name": "Entity Listing request",
+            "is request": true,
+            "response name": "Entity Listing response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/list\\?entity_type="
+                }
+            ]
+        },
+        {
+            "name": "Public Keys History request",
+            "is request": true,
+            "response name": "Public Keys History response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/.well-known/openid-federation-jwks"
+                }
+            ]
+        },
+        {
+            "name": "Consent Page request",
+            "is request": true,
+            "response name": "Consent Page response",
+            "checks": [
+                {
+                    "in": "url",
+                    "check regex": "/consent"
+                },
+                {
+                    "in": "head",
+                    "check param": "Host",
+                    "contains": "cie-provider.org:8002"
+                }
+            ]
+        }          
+    ]
+}
