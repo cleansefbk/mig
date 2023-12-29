@@ -11,7 +11,7 @@ services:
       - ./config/mig-t/msg_def.json:/opt/BurpSuiteCommunity/msg_def.json
       - ./logs/:/opt/BurpSuiteCommunity/logs # Log folder 
     ports:
-      - 8080:8080
+      - 9095:9095
       #- 5005:5005 # To enable java debugger
     networks:
       - oidclab
@@ -37,7 +37,7 @@ services:
       bash -c "dpkg --configure -a
       apt-get update
       apt-get install iptables redsocks curl lynx -qy
-      echo 'base {log_debug = off;log_info = on;log = stderr;redirector = iptables;} redsocks {local_ip = localhost;local_port = 12345;ip = burpsuite;port = 8080;type = http-connect; }' > /etc/#redsocks.conf &&
+      echo 'base {log_debug = off;log_info = on;log = stderr;redirector = iptables;} redsocks {local_ip = localhost;local_port = 12345;ip = burpsuite;port = 9095;type = http-connect; }' > /etc/#redsocks.conf &&
       /usr/sbin/redsocks -c /etc/redsocks.conf &
       iptables -t nat -A OUTPUT -p tcp --dport 4200 -j REDIRECT --to-port 12345"
     environment:
@@ -47,7 +47,7 @@ services:
       - BOOTSTRAP=file:///var/bootstrap.yaml
       - BOOTSTRAP_APPLY=true
       - PROXY_SERVER=burpsuite
-      - PROXY_PORT=8080
+      - PROXY_PORT=9095
       
    relying-party.org:
     image: rp-java # Use this if you build locally
@@ -61,14 +61,14 @@ services:
       sh -c "apt-get update
       apt-get install maven
       apt-get install iptables redsocks curl lynx -qy
-      echo 'base {log_debug = on;log_info = on;log = stderr;redirector = iptables;} redsocks {local_ip = 0.0.0.0;local_port = 12345;ip = burpsuite;port = 8080;type = http-connect; }' > /etc/redsocks.conf &&
+      echo 'base {log_debug = on;log_info = on;log = stderr;redirector = iptables;} redsocks {local_ip = 0.0.0.0;local_port = 12345;ip = burpsuite;port = 9095;type = http-connect; }' > /etc/redsocks.conf &&
       redsocks -c /etc/redsocks.conf &
       iptables -t nat -A OUTPUT -p tcp --dport 8088 -j REDIRECT --to-port 12345 &&
       mvn spring-boot:run"
     privileged: true
     environment:
       - PROXY_SERVER=burpsuite
-      - PROXY_PORT=8080
+      - PROXY_PORT=9095
              
 networks:
   oidclab:

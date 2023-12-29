@@ -141,11 +141,24 @@
 						</div>
 					</div>
 				</div>
-				<!-- eventualmente fare anche altri bottoni, al momento non ancora implementati/danno errore -->
 				<div th:if="${userInfo} and !${code}">
 					<div class="container pt-2 p-3">
 						<div style="word-break: break-word; border: 2px solid red; border-radius: 10px; padding: 10px;">
 							<p th:text="'user info: ' + ${userInfo}"></p>
+						</div>
+					</div>
+				</div>
+				<div th:if="${revoke}">
+					<div class="container pt-2 p-3">
+						<div style="word-break: break-word; border: 2px solid red; border-radius: 10px; padding: 10px;">
+							<p th:text="'Revocation: ' + ${revoke}"></p>
+						</div>
+					</div>
+				</div>
+				<div th:if="${introspect}">
+					<div class="container pt-2 p-3">
+						<div style="word-break: break-word; border: 2px solid red; border-radius: 10px; padding: 10px;">
+							<p th:text="'Introspection: ' + ${introspect}"></p>
 						</div>
 					</div>
 				</div>

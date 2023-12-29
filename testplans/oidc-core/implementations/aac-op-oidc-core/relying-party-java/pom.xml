@@ -4,7 +4,7 @@
 	<groupId>oidc.client</groupId>
     <version>0.0.1-SNAPSHOT</version>
   
-	<artifactId>it.spid.cie.oidc.relying.party.spring-boot-sample</artifactId>
+	<artifactId>it.oidc.relying.party.spring-boot-sample</artifactId>
 	<name>Relying Party SpringBoot Sample</name>
 	<description>Relying Party Sample project for Spring Boot</description>
 

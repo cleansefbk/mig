@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # local build AAC image ---
-
+#git clone -b 4.x https://github.com/scc-digitalhub/AAC.git 
+#cp edited_files/Dockerfile-aac ./AAC/
+#cd AAC
+#sudo docker build -t aac:latest --file Dockerfile-aac .
+#cd ..
 # local build AAC image ---
 
 # uncomment for local build RP image ---

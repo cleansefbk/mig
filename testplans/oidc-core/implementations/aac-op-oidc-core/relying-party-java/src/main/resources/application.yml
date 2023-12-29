@@ -27,7 +27,7 @@ endpoints:
    revoke-endpoint: "http://${endpoints.host.aac}/oauth/revoke"
    introspect-endpoint: "http://${endpoints.host.aac}/oauth/introspect"
    
-   redirect-endpoint: "http://${endpoints.host.rp}/oidc/rp/signin-callback"
+   redirect-endpoint: "http://${endpoints.host.rp}/signin-callback"
 
 
 spring:
