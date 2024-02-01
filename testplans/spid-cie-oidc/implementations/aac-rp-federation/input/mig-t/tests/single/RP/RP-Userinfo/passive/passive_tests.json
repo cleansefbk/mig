@@ -1,0 +1,55 @@
+{
+  "test suite": {
+    "description": "Passive tests - RP-UserInfo",
+    "filter messages": true,
+    "name": "Passive tests - RP-UserInfo"
+  },
+  "tests": [
+  {
+    "test": {
+      "description": "The UserInfo request from the RP is taken and analyzed. In the Authorization field of the head there must be a valid Access Token",
+      "name": "Does the RP contain a valid Access Token in the UserInfo request",
+      "operations": [
+        {
+          "checks": [
+            {
+              "check regex": "Authorization:\\s?Bearer\\s?([\\w=]+)\\.([\\w=]+)\\.([\\w\\-\\+\\/=]*)",
+              "in": "head",
+              "is present": "true"
+            }
+          ],
+          "message type": "UserInfo request"
+        }
+      ],
+      "result": "correct flow s1",
+      "sessions": [
+        "s1"
+      ],
+      "type": "passive"
+    }
+  },
+  {
+    "test": {
+      "description": "The UserInfo request from the RP is taken and analyzed. In the Authorization field of the header there must be an Access Token",
+      "name": "Does the RP contain the Access Token in the UserInfo request",
+      "operations": [
+        {
+          "checks": [
+            {
+              "check param": "Authorization",
+              "in": "head",
+              "is present": "true"
+            }
+          ],
+          "message type": "UserInfo request"
+        }
+      ],
+      "result": "correct flow s1",
+      "sessions": [
+        "s1"
+      ],
+      "type": "passive"
+    }
+  }
+]
+}

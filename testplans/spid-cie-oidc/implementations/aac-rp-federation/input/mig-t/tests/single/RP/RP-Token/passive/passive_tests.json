@@ -1,0 +1,579 @@
+{
+  "test suite": {
+    "description": "Passive tests - RP-Token",
+    "filter messages": true,
+    "name": "Passive tests - RP-Token"
+  },
+  "tests": [
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking the aud. Its value must be an URL",
+        "name": "Does the signed JWT assertion contain a correct aud claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check regex": "\"aud\":\\s*\\[\\s*\"(https?:\\/\\/(www\\\\.)?[-\\w@:%.\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-\\w()@:%\\+.~#?&\\/\\/=]*))\"\\s*(,\\s*\"(https?:\\/\\/(www\\.)?[-\\w@:%.\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-\\w()@:%\\+.~#?&\\/\\/=]*))\"\\s*)*\\]",
+                    "in": "payload"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking if the aud claim is present.",
+        "name": "Does the signed JWT assertion contain the aud claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.aud",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking the exp claim. Its value must be a timestap",
+        "name": "Does the signed JWT assertion contain a correct exp claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check regex": "\"exp\":\\d+",
+                    "in": "payload"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking if the exp claim is present",
+        "name": "Does the signed JWT assertion contain the exp claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.exp",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking the iat claim. Its value must be a timestap",
+        "name": "Does the signed JWT assertion contain a correct iat claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check regex": "\"iat\":\\d+",
+                    "in": "payload"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking if the iat claim is present.",
+        "name": "Does the signed JWT assertion contain the iat claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.iat",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking if the iss claim is present.",
+        "name": "Does the JWT payload contain 'iss' claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.iss",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking if the jti claim is present.",
+        "name": "Does the signed JWT assertion contain the jti claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.jti",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking if the sub claim is present.",
+        "name": "Does the signed JWT assertion contain the sub claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.sub",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The client_assertion parameter in the token request sent by the RP must be a JWT with a signature",
+        "name": "Does the client_assertion in the token request have a correct signature",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "jwt check sig": "X_key_core_RP",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The client_assertion parameter in the token request sent by the RP must be a JWT",
+        "name": "Does the client_assertion in the token request contain a JWT",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check regex": "client_assertion=([\\w=]+)\\.([\\w=]+)\\.([\\w\\-\\+\\/=]*)(?:&|$)",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must contain client_assertion parameter in the URL",
+        "name": "Does the token request contain the client_assertion",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "client_assertion",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The client_assertion_type parameter in the URL of the token request sent by the RP must be set to urn:ietf:params:oauth:client-assertion-type:jwtbearer",
+        "name": "Does the client_assertion_type parameter in the token request contain the correct type",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "client_assertion_type",
+                "in": "body",
+                "is": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must contain client_assertion_type parameter in the URL",
+        "name": "Does the token request contain the client_assertion_type",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "client_assertion_type",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must contain client_id parameter in the URL",
+        "name": "Does the token request contain the client_id",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "client_id",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must contain code parameter in the URL",
+        "name": "Does the token request contain the code parameter",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "code",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must contain code_verifier parameter in the URL",
+        "name": "Does the token request contain the code_verifier parameter",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "code_verifier",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The grant_type parameter in the URL of the token request sent by the RP must be set to authorization_code or to refresh_token. So in this test a token request is taken and the grant_type parameter is checked",
+        "name": "Does the token request contain a correct grant_type parameter",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check regex": "(?<=grant_type=)([^&]+)",
+                "in": "body",
+                "is in": [
+                  "authorization_code",
+                  "refresh_token"
+                ]
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must contain grant_type parameter in the URL",
+        "name": "Does the token request contain the grant_type parameter",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "grant_type",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The token request sent by the RP must be sent in HTTP POST",
+        "name": "Does the token request use HTTP POST",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check regex": "POST",
+                "in": "head",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The client_id parameter in the URL of the token request is taken and checked to be an HTTPS URL",
+        "name": "Does the client_id in the token request contain an HTTPS URL",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check regex": "client_id=https:\\/\\/((:)?www\\.)?([-a-zA-Z0-9@%._\\+~#=:]{2,256})(?:&|$)",
+                "in": "body",
+                "is present": "true"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The client_id parameter in the URL of the token request is taken. This parameter must identify the RP",
+        "name": "Does the client_id in the token request identifies the RP",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check": "client_id",
+                "in": "body",
+                "is": "X_https_RP"
+              }
+            ],
+            "message type": "Token request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+realms:
+  - name: "testLab"
+    slug: "testLab"
+    public: true
+    identityProviders: 
+      - type: "identity"
+        authority: "openidfed"
+        provider: "70e62c3b-8006-47cc-a186-ea37bda004a9"
+        realm: "testLab"
+        enabled: true
+        registered: true
+        name: "django"
+        titleMap: {
+            }
+        descriptionMap: {
+            }
+        configuration:
+            acrValues:
+              - "https://www.spid.gov.it/SpidL2"
+              - "https://www.spid.gov.it/SpidL1"
+            userInfoJWEAlg: "RSA-OAEP"
+            organizationName: "AAC"
+            clientName: "aac client"
+            userInfoJWEEnc: "A256CBC-HS512"
+            type: "OpenIdFedIdentityProviderConfigMap"
+            promptMode:
+              - "consent"
+            trustAnchor: "http://trust-anchor.org:8000"
+            clientJwks: "{\n    \"keys\": [\n  {\n            \"p\": \"1ZZkvhUrgm3KSOUhjwkaDkKNf2CYeR8fbbPekeDvv2YrkekTOYiyFiMVN6eHRyv2dzqRgZOwxkT6l2EhfXsJ0n3xXxi1jsDO-h8FMc6cfjlfQLGPvVIzd1mYRwn9ZoctByqFGZt_55Dlr1I0Vy012qlFbSBwO5elv3z0yDU-ePM\"\
+                ,\n            \"kty\": \"RSA\",\n            \"q\": \"vRaP9VPuDTE37loOAZlmJ6BiplQOwrVtlJc55zUVG8VPKu1vfEpaOAuJKzvtyEzRgL0s9EqUUiLD88b_myNMzQ8YrGJalPRC1VK1gEj_Mnvpj1vLeEHUrJnVcriX3MBMfIA14OJcYMXWEB_J5M4qt4OMCI5z_TZPRlBy7AThc-M\"\
+                ,\n            \"d\": \"FgB7ARqN50qKUoKUzaYnhIhAkIeXYm7koiuK9t0UtK7llGieN1y4k0xYFdgBKsBNGZkk1GvtPkFBzk3o4BFu6-YDNIGYzF3_aiZ1OUfMcCVul79ZLedWGCDzIRFin1MPq30iRfiqrb7qBIUJNKXaztFQ4NDAxEwHwqhT4vhV-7RucS7uZOJRU9llJa5SrUA6dfIP2xFna7Ulp_hnLeWvgXXwnGmxd3vVefYKwI8FGTP5RuAwc7LjOmzchnwAC-gDjE93Ggbf2PTxZW0LJSApNH1LL9oz4JtlArQTfh4zclle1bKK38ZVb-AAMmXycQTXJZ-VgxzSkVPA3RKZtJFbUQ\"\
+                ,\n            \"e\": \"AQAB\",\n            \"use\": \"enc\",\n         \
+                \   \"kid\": \"cliente\",\n            \"qi\": \"0mzgsd75Eb5n2boag3GhCNaEYYbxXXtjZXcho-RxOEy847Srf0otwmSX2ocKNxli5qX2jzqDhG-Z9IHWZwnWidQVshc2xMmqm8oOJ6X36DgzfazBRW14ahHtO0VX-yI1VIBxBAhNxvaF0h-mnl6RroHSh3iTTkYeOOK_zII3q5I\"\
+                ,\n            \"dp\": \"reOfaVH69llEU0yYoccbO3jbklSmThYUlE_YaJPlHMKlvkkvqaussXEmmQT_keYs5qz8Qa5oQUNvcUdW6L3_JSv8Exwe1HYNDH2s0PwRVIKJFjZ5e_0sgYKkA1ISyCJNeoQXkN2UqIbDOJWIn2Djc35UU6ARP7Ma8mddMpKGphk\"\
+                ,\n            \"alg\": \"RSA-OAEP\",\n            \"dq\": \"p1egb-2nb-VvKnJokuG_lrJKnAkoRwlpwWdUx1ojJECqn8MiN01WKuOKsciH2AykHNtPPaQDP-2kncovzIyhG5mQrH8ey1ShEUnxd2ci8vrW6RjEKdmY7mf2j2DuhV9qUYTmKfAq8TolCIAZnXUYOPEirS_lVuMJpaDtFBP9syE\"\
+                ,\n            \"n\": \"ncLbaK8x6ELRbEBJ8xY3MkwaPPOPzDELkcMyXwHHzs41MnoxEh6yIt5fSoF8GZXJYU8qK0RGpKZC_BIgbvq0v_Evr3gjWJYCPq4VujsXMJBECc0pfO74eooeTlOudVkKJ5IknEJXyn3rtK-bcJGhWWhLy50BX7NB8625vABAMn1R2kGoM63YZH2YIZf922JKAGr89OJ1OSyVw0E62-WjPY6852FgX-mZ99HxPu1utTKyBpLcJy-qpdBwlgzjguQ4YDKVxhHfXHjWHuRG0syaUcFacpAVDgR9E9ZQ2EDVDVn0H7vHW0aGlIFEf39SeNYZscSp2t_mS4BX8nlCYE1oeQ\"\
+                \n        },\n    {\n    \"p\": \"0KZoh7eYSz3qKGbFYCA7_V-9Pq1A4pLladtOldx-_HUd3gOhmbOA05NDaZoHPYObgN4Nltw7Yq4_hCrbG4m2s79Jx0IyhT4Y-gLZ9Pxo_t38FvzDSTLioo0aTegx2-y_o0Abf3CygMj3pmty8-lAiJHLFk8sh4QaeYk5dZYRQ3k\"\
+                ,\n    \"kty\": \"RSA\",\n    \"q\": \"xJW7GnAgxgd-RbkY7jXowA66ES3WZlpDMlZ0mnryX5xnPdaMoc_2dGQiH3neW1TiCuYBrZW4-zbv5iaie9rafyLzTdMs6ViMk7-ig5kCPmZUAcNZo0262GrjBMGmm9tBTOJ5-YSJOW2F4tPno9x8DwGwyzZU9CaZy4QI3S5BWuU\"\
+                ,\n    \"d\": \"e-qxVBqsMtdPVjxWh_eyMMSuAwSrHQBobvcn9bGVBWLM5DT_1syxu7rDbiEDCT3yL4B_138BjBj1V-GrnUsnaNBZ0wGVukh7nV7ku0aY7MUK-w7Fae93dVXxH33aDOzGpGgUR_XFaLJUfYC6oLB20uR3HdVi2fzAxJUobDk9HsCsq4XrkD4bvlo5pEyGbxupuUKZDFcNq9H2kfo_Ah7hhAHr8ifQ6HlVQTGJwzWTe5gqep0Kdw-cyIvQgSoHTLHfFAkisWm3WGzSurHMnlbNx2uu05H1CPfOfEaMaGkCKuQc80mvOaq2vzKM7SPJkItM_gfIaHT8TIj5JxPRD2-yQQ\"\
+                ,\n    \"e\": \"AQAB\",\n    \"use\": \"sig\",\n    \"kid\": \"clien\",\n\
+                \    \"qi\": \"qpF6__mt0NfK1ROgBwkbLRBnQg00IM7mWExbQW8V0ET8DInpveSOg3oFaMoeIrd7sPEO2IKU2vrq1weMZBoL6-fmKc6AlgBsUUqSSUaot0hGAytkzHj30efJVghnHuzORgKzv9a3eXmyD4LUNrGHoIQuP3rN-iRTRZ_gmHLRHyo\"\
+                ,\n    \"dp\": \"FUu2xYteludl2-PJZ2tC1DSOWzRRuA5oLeq9VZxgtaG6f6t9NfPVRUL1kXSwIn4pQ_jmCCzIPuUsBHBfVqsyo5v1isnd4C2bXQEnf9K3YLQFg88em3z_FroyIht940WBtcbYR6SYA37_j9PNsslu1cGTqd5A3EAGd7siyzaa4nk\"\
+                ,\n    \"dq\": \"FPYSOUNzeyoZYL3X1q6Q3smzNVm53rgJKjjlvgMWDPPUXleeLzLJiKeUq96Gwx5N6_OSgjvQuZimA9hiwuoXGi9T2hyGUWtLsgVhAr8x6g1nL7jwueTz41eiVUOAzGWYlOYhM2Xaa_EtsX3-2Q4NfFwlycVFUbM7-uNdPphMB7E\"\
+                ,\n    \"n\": \"oDlxYdozuhNYWDlcE20YlD4Y6Jafbcov23iivOyhDTjKoRYsPj9hAYcfTwu2on8ITPIlzKiojC4Hf95mcXkW0aS3f7q1Qk6EijMvMdOtEHHm-B6hPgRZw-IsQFxqXJVlzEEOebt6nP6pmhAP2J7AU9u507fMcHJm-wJwhDczbR7dMDE0gVSzJgXPYizEcLiHHF0KK8Ll022yFXZh-L3V5_CRPbqRDcFkzv630hphYn58WuQ147eONgo3lXnLq9lAP1goZnBLiYvH4XrhsxqhdCkYrQuktM2kH0yh7Ig5qDdIZe7ki3YOFZtTZ8iHsVDmDPJ5RB3GoH-CLPjoLuLlPQ\"\
+                \n}\n      \n    ]\n}"
+            scope: "openid,offline_access"
+            claims:
+              - "https://attributes.eid.gov.it/fiscal_number"
+              - "https://attributes.eid.gov.it/e_delivery_service"
+              - "document_details"
+              - "date_of_issuance"
+              - "birthdate"
+              - "email_verified"
+              - "address"
+              - "gender"
+              - "phone_number_verified"
+              - "given_name"
+              - "place_of_birth"
+              - "phone_number"
+              - "family_name"
+              - "email"
+              - "username"
+            federationJwks: |-
+                {
+                            "p": "wbP1I_64gaTMQDAotXo8jezYq08FQLSAp_MGzvjapIDM5wLCQsa0AYpbx9c3gruHshcPisaPxKRayLTJz2j950d4F31X_3M5XMOAM9m92ZTbyt8F36PYzbGA8a42eGOlHkiA2qtY9j9KAAsTVR3qB_AbvL_NVyXAjngNTIzDid0",
+                            "kty": "RSA",
+                            "q": "syFg-oSofsYZd-dv2TYipCd3TNkY3ChS1STelAMrDv3QwR3cf7ORossP66j1_S4ZPqrCQBNWXO06vanCqJWU5k1TRfe3yA_FfChE9jmgzoBq_h2Yp4iTo44dPYFRDRU6eAw2MIdWi2snn0cJILbf32tu3pEP7Kt3UYJ-r7W3BAM",
+                            "d": "AmSQsMpczK4td2uSMRfbXi0fbT87dlPBiXG937_6CnRYKHa0dTJugzhhtYF6biVX9C6oDKV6Pfui_mLg3Vgm8uZ5jN6qGyadBp5O2wiOrAOsNgT0NtQfJAVo9Ua2b3qqwMlhj7LO08HTRB7PimLt7SEuJ98-d4GUix8lvfiHmexZqaSq7ImzlM8tp3icnOtmJOVJIW_oAb6Gv1FRi2Jkc77BhEjqmK_yIBbSfzHzhhnLWJ__v3K9pjG05ZtGjTQT_rTHPUMueQaToXcpid5gJSnTlCMXIsL7YPdPxYWJINQME5xF3KQ4YldoAz6o6NO8-qX0SE6zKvMY7sDctHROmQ",
+                            "e": "AQAB",
+                            "use": "sig",
+                            "kid": "fed",
+                            "qi": "ZFMZ6qK4xrnXhWn-vOX7pSwh5wSCnKbc47MgPFaMa5o_JraV9fszgRNiABEtafvh1RQ0b0tphHPPT-1pIH26vqzlLXSJMnag_IxIT_k57OOlogpEnLWK-tb6Q_MtsB4IOMBfGbtYKWCYUuWh6DkNYRaOQ6FXWezD-tbwmDF8RII",
+                            "dp": "mZqdMNgTdCs9FUGbZp3yWxGQl_hnz_HTfFuJ8KMCryS8WAymA9ISeI5BTe3qxS704lLLLl9bLrKuky5aQrGddsQEBYyONbInsNoPVg67MEmNKglFXR1PFX5HJF_kLf_GtocEN2Ndfpidk_80a3D3XygWtszahtsXIWMuGKAfh7k",
+                            "alg": "RS256",
+                            "dq": "ackpi2iyVQPKYJwl2oH03TqNYq3G16VcnZFDfOeOEzFjidiHskaqmBgRk9tZQiZqNC8Fvm9tDj3u9bj-Qy7rG0LJDcXoG9bsipEBgOOxiqIeDWoPD8lBX1J7BCqNYguKVwDnM6uJOZaTdKWvx0kYVsoMVJYYcG0mbtWA2WWX6l8",
+                            "n": "h4oV-87KBYbH7odTkA1gsuNej4YFNnqMi62KLRq59JRhiLWjfab9C-y8DDX5R2rkPMLC_6yPQiFnxuLZVBVOVpts7-U40sztdxzecZlE8F3daj4BR4q5cvTurBGjHMlmUsgZBSu0dBXo-gr88iob5F2oK61Sslj1UD_qHwlraYlw2WRny960ap9123i22ttWbnYIP1u4xmAZRQxMWZohtqQhm_V30x43QmFueIhgSJ7TpLB23t_1FKZcZhwaSQ6IR010ej5oMZUCFcOdzW6XKkpEqgPtJHv2NyQ2AgR09ULpq7-OYyj8JdyR98OMEKw2NlrMfnC6__aTnD5sgm0Rlw"
+                        }
+            authorityHints:
+              - "http://trust-anchor.org:8000"
+            trustMarks: "[{\"id\": \"https://www.spid.gov.it/openid-federation/agreement/sp-public\"\
+        , \"trust_mark\": \"eyJ0eXAiOiJ0cnVzdC1tYXJrK2p3dCIsImFsZyI6IlJTMjU2Iiwia2lkIjoiQlh2ZnJsbmhBTXVIUjA3YWpVbUFjQlJRY1N6bXcwY19SQWdKbnBTLTlXUSJ9.eyJpc3MiOiJodHRwOi8vdHJ1c3QtYW5jaG9yLm9yZzo4MDAwIiwic3ViIjoiaHR0cDovL2FhYy1wcm92aWRlci5vcmc6ODA4MC9hdXRoL29wZW5pZGZlZC9tZXRhZGF0YS83MGU2MmMzYi04MDA2LTQ3Y2MtYTE4Ni1lYTM3YmRhMDA0YTkiLCJpYXQiOjE3MDQ2NjExMzUsImlkIjoiaHR0cHM6Ly93d3cuc3BpZC5nb3YuaXQvY2VydGlmaWNhdGlvbi9ycCIsIm1hcmsiOiJodHRwczovL3d3dy5hZ2lkLmdvdi5pdC90aGVtZXMvY3VzdG9tL2FnaWQvbG9nby5zdmciLCJyZWYiOiJodHRwczovL2RvY3MuaXRhbGlhLml0L2l0YWxpYS9zcGlkL3NwaWQtcmVnb2xlLXRlY25pY2hlLW9pZGMvaXQvc3RhYmlsZS9pbmRleC5odG1sIn0.c2r7aY7Fpt4EHK56hrK1tuqqwcn0709srnBduceDkKzE1JGWdmvChmkwI1KWQLg3Y-OsrN2-mOfUumAYsJMzzP4vYz7TBz1HY_MIIlsU-05mxZnX9gVqVjeLpRPG_E2ZuWR7nIOEM3kM63TyWJ8CwM3RiiUdwa0AeUl5lU1JUmr2mhHInwxzNSUkgZJC4l4gMZHPAFmm2Xuy_f8zbMjxyV2fALqkmrXRiysWf35vfR3BhnQlQ_XgAfSSDpzKsfvbXKNm-9elNuWta2NgY7qNQRdIL5PQTXBOnLP5MsJKgXjZX5tL866M31wNCTnudE9sytLPqSSDr3vp3mIetb45kw\"\
+        }]"
+            contacts:
+              - "test@test.test"
+        settings:
+            linkable: true
+            persistence: "repository"
+            type: "settings:identity_provider"
+
+
+                

@@ -1,0 +1,1247 @@
+{
+  "test suite": {
+    "description": "Passive tests - RP-Entity Configuration",
+    "filter messages": true,
+    "name": "Passive tests - RP-Entity Configuration"
+  },
+  "tests": [
+    {
+      "test": {
+        "description": "To accomplish this test, the Entity configuration of the interested entity is taken and the three parts of the JWT (header, payload and signature) are base64url decoded. Finally, the signature is validated passing the public key (n, e of jwks parameter that must be taken from the Entity Statement of a superior), the JWS Signature (received signature base64url decoded) and the JWS signing input (header and payload base64url encoded and concatenated with a dot dividing them) to a signature verifier configured for the algorithm described in the Entity Configuration Header",
+        "name": "Does the entity correctly sign the Entity Configuration",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "jwt check sig": "X_key_RP",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "To accomplish this test, the Entity configuration of the interested entity is taken, the payload is decoded (Base64 encoding) and the sub parameter is checked. Its value must be equal to the one in the iss parameter",
+        "name": "Does entity configuration RP contain a correct sub parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.sub",
+                    "in": "payload",
+                    "is": "X_url_RP"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'client_id' parameter is an HTTPS URL",
+        "name": "Does the RP metadata contain correct type of 'client_id' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.client_id",
+                    "check regex": "https:\\/\\/(www\\.)?[-\\w@:%.\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-\\w()@:%\\+.~#?&\\/\\/=]*)",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'client_id' parameter is checked.",
+        "name": "Does the RP metadata contain the 'client_id' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.client_id",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'client_registration_types' parameter is 'automatic'",
+        "name": "Does the RP metadata contain correct 'client_registration_types' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.client_registration_types[0]",
+                    "in": "payload",
+                    "is in": [
+                      "automatic"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'client_registration_types' parameter is checked.",
+        "name": "Does the RP metadata contain the 'client_registration_types' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.client_registration_types",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the presence of the contacts claim in the 'federation_entity' entity type is checked.",
+        "name": "Does the RP metadata contain the contacts claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.contacts",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the presence of the federation_resolve_endpoint claim in the 'federation_entity' entity type is checked.",
+        "name": "Does the RP metadata contain the federation_resolve_endpoint claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.federation_resolve_endpoint",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'grant_types' parameter contains 'authorization_code' and 'refresh_token'",
+        "name": "Does the RP metadata contain correct grant_types claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.grant_types[0]",
+                    "in": "payload",
+                    "is in": [
+                      "authorization_code",
+                      "refresh_token"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the 'grant_types' parameter is a JSON array",
+        "name": "Does the RP metadata contain correct type grant_types claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.grant_types",
+                    "check regex": "^\\{(\\s*\"[^\"]*\"\\s*:\\s*(?:\"[^\"]*\",?|\\[[\\S\\s]*\\],?|\\{[\\S\\s]*\\},?)\\s*)*\\}$",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'grant_types' parameter is checked",
+        "name": "Does the RP metadata contain the grant_types claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.grant_types",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the presence of the homepage_uri claim in the 'federation_entity' entity type is checked.",
+        "name": "Does the RP metadata contain the homepage_uri claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.homepage_uri",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'id_token_encrypted_response_alg' parameter is checked. It must not contain the value ['RSA_1_5'].",
+        "name": "Does the RP metadata contain incorrect 'id_token_encrypted_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_encrypted_response_alg",
+                    "in": "payload",
+                    "not contains": [
+                      "RSA_1_5"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'id_token_encrypted_response_alg' parameter is ['RSA-OAEP', 'RSA-OAEP-256']",
+        "name": "Does the RP metadata contain correct 'id_token_encrypted_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_encrypted_response_alg",
+                    "in": "payload",
+                    "is in": [
+                      "RSA-OAEP",
+                      "RSA-OAEP-256"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'id_token_encrypted_response_alg' parameter is checked.",
+        "name": "Does the RP metadata contain the 'id_token_encrypted_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_encrypted_response_alg",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'id_token_encrypted_response_enc' parameter is ['A128CBC-HS256', 'A256CBC-HS512'].",
+        "name": "Does the RP metadata contain correct 'id_token_encrypted_response_enc' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_encrypted_response_enc",
+                    "in": "payload",
+                    "is in": [
+                      "A128CBC-HS256",
+                      "A256CBC-HS512"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'id_token_encrypted_response_enc' parameter is checked.",
+        "name": "Does the RP metadata contain the 'id_token_encrypted_response_enc' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_encrypted_response_enc",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'id_token_signed_response_alg' parameter is checked. It must not contain the values ['none', 'HS256', 'HS384', 'HS512'].",
+        "name": "Does the RP metadata contain incorrect 'id_token_signed_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_signed_response_alg",
+                    "in": "payload",
+                    "is not in": [
+                      "none",
+                      "HS256",
+                      "HS384",
+                      "HS512"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'id_token_signed_response_alg' parameter is ['RS256', 'RS512']",
+        "name": "Does the RP metadata contain correct 'id_token_signed_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_signed_response_alg",
+                    "in": "payload",
+                    "is in": [
+                      "RS256",
+                      "RS512"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'id_token_signed_response_alg' parameter is checked.",
+        "name": "Does the RP metadata contain the 'id_token_signed_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.id_token_signed_response_alg",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'jwks' parameter is checked. If it is absent, than the RP is not compliant with the specification",
+        "name": "Does the RP metadata contain the 'jwks' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.jwks",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the value of the logo_uri claim in the 'federation_entity' entity type is an URL",
+        "name": "Does the RP metadata contain correct type logo_uri claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.logo_uri",
+                    "check regex": "https:\\/\\/(www\\.)?[-\\w@:%.\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-\\w()@:%\\+.~#?&\\/\\/=]*)",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the presence of the logo_uri claim in the 'federation_entity' entity type is checked.",
+        "name": "Does the RP metadata contain the logo_uri claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.logo_uri",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the presence of the organization_name claim in the 'federation_entity' entity type is checked.",
+        "name": "Does the RP metadata contain the organization_name claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.organization_name",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata in the RP Entity Configuration are taken and the presence of the policy_uri claim in the 'federation_entity' entity type is checked.",
+        "name": "Does the RP metadata contain the policy_uri claim",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.federation_entity.policy_uri",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'token_endpoint_auth_method' parameter is 'one_of': 'private_key_jwt'",
+        "name": "Does the RP metadata contain correct 'token_endpoint_auth_method' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.token_endpoint_auth_method",
+                    "in": "payload",
+                    "is in": [
+                      "private_key_jwt"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'token_endpoint_auth_method' parameter is checked.",
+        "name": "Does the RP metadata contain the 'token_endpoint_auth_method' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.token_endpoint_auth_method",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'userinfo_encrypted_response_alg' parameter is checked. It must not contain the value ['RSA_1_5'].",
+        "name": "Does the RP metadata contain incorrect 'userinfo_encrypted_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_encrypted_response_alg",
+                    "in": "payload",
+                    "is not in": [
+                      "RSA_1_5"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'userinfo_encrypted_response_alg' parameter is ['RSA-OAEP', 'RSA-OAEP-256']",
+        "name": "Does the RP metadata contain correct 'userinfo_encrypted_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_encrypted_response_alg",
+                    "in": "payload",
+                    "is in": [
+                      "RSA-OAEP",
+                      "RSA-OAEP-256"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'userinfo_encrypted_response_alg' parameter is checked.",
+        "name": "Does the RP metadata contain the 'userinfo_encrypted_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_encrypted_response_alg",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'userinfo_encrypted_response_enc' parameter is ['A128CBC-HS256', 'A256CBC-HS512'].",
+        "name": "Does the RP metadata contain correct 'userinfo_encrypted_response_enc' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_encrypted_response_enc",
+                    "in": "payload",
+                    "is in": [
+                      "A128CBC-HS256",
+                      "A256CBC-HS512"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'userinfo_encrypted_response_enc' parameter is checked.",
+        "name": "Does the RP metadata contain the 'userinfo_encrypted_response_enc' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_encrypted_response_enc",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'userinfo_signed_response_alg' parameter is checked. It must not contain the values ['none', 'HS256', 'HS384', 'HS512'].",
+        "name": "Does the RP metadata contain incorrect 'userinfo_signed_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_signed_response_alg",
+                    "in": "payload",
+                    "is not in": [
+                      "none",
+                      "HS256",
+                      "HS384",
+                      "HS512"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the value of the 'userinfo_signed_response_alg' parameter is ['RS256', 'RS512']",
+        "name": "Does the RP metadata contain correct 'userinfo_signed_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_signed_response_alg",
+                    "in": "payload",
+                    "is in": [
+                      "RS256",
+                      "RS512"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'userinfo_signed_response_alg' parameter is checked.",
+        "name": "Does the RP metadata contain the 'userinfo_signed_response_alg' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.userinfo_signed_response_alg",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the 'response_types' parameter in the 'openid_relying_party' is a JSON array",
+        "name": "Does the RP metadata contain the 'response_types' parameter as a json",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.response_types",
+                    "check regex": "^\\[\\s*\"[^\"]*\"(?:,\\s*\"[^\"]*\")*\\s*\\]$",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the 'response_types' parameter in the 'openid_relying_party' contains the value 'code'",
+        "name": "Does the RP metadata contain in the 'response_types' the value 'code'",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.response_types[0]",
+                    "in": "payload",
+                    "is in": [
+                      "code"
+                    ]
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the RP metadata are taken and the presence of the 'response_types' parameter in the 'openid_relying_party' metadata type is checked",
+        "name": "Does the RP metadata contain the 'response_types' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.metadata.openid_relying_party.response_types",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "To accomplish this test, the Entity configuration of the RP is taken, the payload is decoded (Base64 encoding) and the trust_marks parameter is checked, it must be a JSON array",
+        "name": "Does the RP's entity configuration contain a correct trust_marks parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check regex": "\"trust_marks\":\\s*\\[\\s*\\{\\s*\"\\w*\":\\s*\".*\"(,\\s*.*\")*\\s*\\}\\s*\\]",
+                    "in": "payload"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "To accomplish this test, the Entity configuration of the RP is taken, the payload is decoded (Base64 encoding) and the presence of the trust_marks parameter is checked.",
+        "name": "Does the RP's entity configuration contain the trust_marks parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.trust_marks",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Entity Configuration response RP"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    }
+  ]
+}

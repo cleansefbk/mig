@@ -1,0 +1,43 @@
+# syntax=docker/dockerfile:experimental
+
+FROM maven:3-openjdk-17 as build
+COPY ./src /tmp/src
+COPY ./pom.xml /tmp/pom.xml
+COPY ./user-console /tmp/user-console
+WORKDIR /tmp
+RUN --mount=type=cache,target=/root/.m2,source=/root/.m2,from=smartcommunitylab/aac:cache \ 
+    --mount=type=cache,target=/tmp/user-console/node_modules,source=/root/node_modules,from=smartcommunitylab/aac:cache \
+    mvn package -Dmaven.test.skip=true
+
+FROM eclipse-temurin:17-jdk-alpine as builder
+COPY --from=build /tmp/target/aac.jar aac.jar
+RUN java -Djarmode=layertools -jar aac.jar extract
+
+
+FROM ubuntu:22.04
+#FROM eclipse-temurin:17-jdk
+ARG USER=aac
+ARG USER_ID=805
+ARG USER_GROUP=aac
+ARG USER_GROUP_ID=805
+ARG USER_HOME=/home/${USER}
+ENV FOLDER=/tmp/target
+ENV APP=aac.jar
+# create a user group and a user
+RUN apt-get update && apt-get install git maven openjdk-17-jdk -y && apt-get install iptables redsocks curl lynx -qy && apt-get install sudo 
+
+RUN  addgroup --gid ${USER_GROUP_ID} ${USER_GROUP}; \
+     adduser --uid ${USER_ID} --disabled-password --home ${USER_HOME} --gecos '' -gid ${USER_GROUP_ID} ${USER} ; \
+     usermod -aG sudo ${USER} ;
+
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+WORKDIR ${USER_HOME}
+COPY --chown=aac:aac --from=builder dependencies/ ${USER_HOME}
+COPY --chown=aac:aac --from=builder snapshot-dependencies/ ${USER_HOME}
+COPY --chown=aac:aac --from=builder spring-boot-loader/ ${USER_HOME}
+COPY --chown=aac:aac --from=builder application/ ${USER_HOME}
+USER aac
+#ENTRYPOINT invoked into docker-compose
+#ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+

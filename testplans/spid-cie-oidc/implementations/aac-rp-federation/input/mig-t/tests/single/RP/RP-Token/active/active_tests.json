@@ -1,0 +1,170 @@
+{
+  "test suite": {
+    "description": "Active tests - RP-Token",
+    "filter messages": true,
+    "name": "Active tests - RP-Token"
+  },
+  "tests": [
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking the iss claim. Its value must be an URL identifying the RP",
+        "name": "Does the JWT payload contain a correct 'iss' claim",
+        "operations": [
+          {
+            "action": "start",
+            "session": "s1"
+          },
+          {
+            "action": "intercept",
+            "decode operations": [
+              {
+                "decode param": "[\\s\\S]*",
+                "edits": [
+                  {
+                    "as": "client_id",
+                    "jwt from": "payload",
+                    "jwt save": "$.metadata.openid_relying_party.client_id"
+                  }
+                ],
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "from session": "s1",
+            "message type": "Entity Configuration response RP",
+            "then": "forward"
+          },
+          {
+            "action": "intercept",
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.iss",
+                    "contains": "client_id",
+                    "in": "payload",
+                    "use variable": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "from session": "s1",
+            "message type": "Token request",
+            "then": "forward"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "active"
+      }
+    },
+    {
+      "test": {
+        "description": "This test can be performed by taking the JWT present in the 'client_assertion' field of the RP's request, base64url decoding the payload and checking the sub claim. Its value must be the same of the iss value",
+        "name": "Does the JWT payload contain a correct sub claim",
+        "operations": [
+          {
+            "action": "start",
+            "session": "s1"
+          },
+          {
+            "action": "intercept",
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.sub",
+                    "contains": "saved_iss",
+                    "in": "payload",
+                    "use variable": "true"
+                  }
+                ],
+                "decode param": "(?<=client_assertion=)([^&]+)",
+                "edits": [
+                  {
+                    "as": "saved_iss",
+                    "jwt from": "payload",
+                    "jwt save": "$.iss"
+                  }
+                ],
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "from session": "s1",
+            "message type": "Token request",
+            "then": "forward"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "active"
+      }
+    },
+    {
+      "test": {
+        "description": "The ID Token present in the Token Response is taken, the payload is base64url decoded, analyzed and the value of the 'aud' parameter in the Payload set to the RP's 'client_id'",
+        "name": "Does the issued JWT ID Token contain the 'aud' parameter in the Payload set to RP's 'client_id'",
+        "operations": [
+          {
+            "action": "start",
+            "session": "s1"
+          },
+          {
+            "action": "intercept",
+            "decode operations": [
+              {
+                "decode param": "body",
+                "edits": [
+                  {
+                    "as": "aud[0]",
+                    "jwt from": "(?<=\"id_token\": \")[^\"]+",
+                    "jwt save": "$.payload"
+                  }
+                ],
+                "from": "Token response",
+                "type": "jwt"
+              }
+            ],
+            "from session": "s1",
+            "message type": "saved_iss",
+            "then": "forward"
+          },
+          {
+            "action": "intercept",
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.iss",
+                    "contains": "aud[0]",
+                    "in": "payload",
+                    "use variable": "true"
+                  }
+                ],
+                "decode param": "[\\s\\S]*",
+                "from": "body",
+                "type": "jwt"
+              }
+            ],
+            "from session": "s1",
+            "message type": "Entity Configuration response RP",
+            "then": "forward"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "active"
+      }
+    }
+  ]
+}

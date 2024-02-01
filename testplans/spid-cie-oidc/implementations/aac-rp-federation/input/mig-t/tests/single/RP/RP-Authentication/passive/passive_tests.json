@@ -1,0 +1,727 @@
+{
+  "test suite": {
+    "description": "Passive tests - RP-Authentication",
+    "filter messages": true,
+    "name": "Passive tests - RP-Authentication"
+  },
+  "tests": [
+    {
+      "test": {
+        "description": "The Authentication request is taken and the presence of the 'code_challenge' parameter is checked. If it is present, than the Authentication Request is using PKCE and is compliant with the specifications, otherwise it is not compliant.",
+        "name": "Does the RP's Authentication Request contain the 'code_challenge' parameter",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check param": "code_challenge",
+                "in": "url",
+                "is present": "true"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken and the presence of the 'code_challenge_method' parameter is checked. If it is not present, then the RP is not compliant with the specifications",
+        "name": "Does the RP's Authentication Request contain the 'code_challenge_method' parameter",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check param": "code_challenge_method",
+                "in": "url",
+                "is present": "true"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'acr_values' parameter is checked. If it is present, than it must be a string with the requested 'acr' values, each of them separated by a single space. The supported values are 'https://www.spid.gov.it/SpidL1', 'https://www.spid.gov.it/SpidL2' and 'https://www.spid.gov.it/SpidL3'. If it contains other values or it is missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain a correct 'acr_values' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.acr_values",
+                    "in": "payload",
+                    "is in": [
+                      "https://www.spid.gov.it/SpidL1",
+                      "https://www.spid.gov.it/SpidL2",
+                      "https://www.spid.gov.it/SpidL3",
+                      "https://www.spid.gov.it/SpidL1 https://www.spid.gov.it/SpidL2",
+                      "https://www.spid.gov.it/SpidL1 https://www.spid.gov.it/SpidL3",
+                      "https://www.spid.gov.it/SpidL2 https://www.spid.gov.it/SpidL1",
+                      "https://www.spid.gov.it/SpidL2 https://www.spid.gov.it/SpidL3",
+                      "https://www.spid.gov.it/SpidL3 https://www.spid.gov.it/SpidL1",
+                      "https://www.spid.gov.it/SpidL3 https://www.spid.gov.it/SpidL2",
+                      "https://www.spid.gov.it/SpidL1 https://www.spid.gov.it/SpidL2 https://www.spid.gov.it/SpidL3"
+                    ]
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'acr_values' parameter is checked. If it is missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'acr_values' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.acr_values",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'aud' parameter is checked. If it missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'aud' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.aud",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'exp' parameter is checked. If it is missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'exp' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.exp",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the Authentication Request is taken and the alg parameter in the JWT Header is checked. If it corresponds to a symmetric algorithm or it is none, than the RP is not compliant with the specifications.",
+        "name": "Does the RP use an asymmetric algorithm to sign the JWT in the request parameter of the Authentication Request",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.alg",
+                    "in": "header",
+                    "is not in": [
+                      "none",
+                      "HS256",
+                      "HS384",
+                      "HS512"
+                    ]
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the request parameter of the Authentication Request is taken, the payload decrypted and the presence of the 'client_id' parameter is checked.",
+        "name": "Does the RP Authentication Request's JWT contain the 'client_id' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.client_id",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the request parameter of the Authentication Request is taken, and the presence of the 'kid' parameter is checked.",
+        "name": "Does the JWT header of the Authentication Request contain the kid parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.kid",
+                    "in": "header",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'iat' parameter is checked. If it is missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'iat' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.iat",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'iss' parameter is checked.",
+        "name": "Does the RP Authentication Request's JWT contain the 'iss' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.iss",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'nonce' parameter is checked.",
+        "name": "Does the RP Authentication Request's JWT contain the 'nonce' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.nonce",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'prompt' parameter is checked. If it is missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'prompt' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.prompt",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'redirect_uri' parameter",
+        "name": "Does the RP Authentication Request's JWT contain the 'redirect_uri' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.redirect_uri",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'response_type' parameter is checked",
+        "name": "Does the RP Authentication Request's JWT contain the 'response_type' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.response_type",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'scope' parameter is checked.",
+        "name": "Does the RP Authentication Request contain the 'scope' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.scope",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the value of the 'state' parameter must be at least 32 alphanumeric characters long. If it is not present or its length is less than 32 alphanumeric characters, then the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'state' parameter greater than 32 characters",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.state",
+                    "in": "payload",
+                    "check regex": "([\\x00-\\x7F]{32,})"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'state' parameter is checked.",
+        "name": "Does the RP Authentication Request's JWT contain the 'state' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.state",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the presence of the 'ui_locales' parameter is checked. If it is missing, the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'ui_locales' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.ui_locales",
+                    "in": "payload",
+                    "is present": "true"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the value of the 'nonce' parameter must be at least 32 alphanumeric characters long.",
+        "name": "Does the RP Authentication Request's JWT contain the 'nonce' parameter longer than 32 characters",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.nonce",
+                    "in": "payload",
+                    "check regex": "([\\x00-\\x7F]{32,})"
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the 'prompt' parameter is checked. It must be set to the value 'consent' or 'consent login'. If it contains other values or it is missing, than the RP is not compliant with the specifications",
+        "name": "Does the RP Authentication Request's JWT contain the 'prompt' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.prompt",
+                    "in": "payload",
+                    "is in": [
+                      "consent",
+                      "consent login"
+                    ]
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "The Authentication request is taken, the JWT Token in the request parameter base64url decoded and the value of the 'scope' parameter must be set to the value 'openid' then it can (optionally) have the values 'offline_access', 'profile' or 'email' appended.",
+        "name": "Does the RP Authentication Request contain a correct value in 'scope' parameter",
+        "operations": [
+          {
+            "decode operations": [
+              {
+                "checks": [
+                  {
+                    "check": "$.scope",
+                    "in": "payload",
+                    "is in": [
+                      "openid",
+                      "openid profile",
+                      "openid email",
+                      "openid offline_access",
+                      "openid offline_access profile",
+                      "openid offline_access email"
+                    ]
+                  }
+                ],
+                "decode param": "request",
+                "from": "url",
+                "type": "jwt"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the Authentication Request is taken and the presence of the client_id parameter in the URL is checked",
+        "name": "Does the RP insert the client ID in the url of the request",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check param": "client_id",
+                "in": "url",
+                "is present": "true"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    },
+    {
+      "test": {
+        "description": "In this test the Authentication Request is taken and the presence of the response_type parameter in the URL is checked",
+        "name": "Does the RP insert the response type in the url of the request",
+        "operations": [
+          {
+            "checks": [
+              {
+                "check param": "response_type",
+                "in": "url",
+                "is present": "true"
+              }
+            ],
+            "message type": "Authentication request"
+          }
+        ],
+        "result": "correct flow s1",
+        "sessions": [
+          "s1"
+        ],
+        "type": "passive"
+      }
+    }
+  ]
+}
