@@ -2,8 +2,8 @@ version: "3"
 
 services:
   burpsuite:
-    image: i-mig-t # Use this if you build locally
-    #image: ghcr.io/stfbk/mig-i-mig-t:v2.1.1
+    #image: i-mig-t # Use this if you build locally
+    image: ghcr.io/stfbk/mig-i-mig-t:v2.2
     volumes:
       - /tmp/.X11-unix/:/tmp/.X11-unix/
       - /etc/localtime:/etc/localtime:ro
