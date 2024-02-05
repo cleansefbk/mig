@@ -25,7 +25,7 @@
                   {
                     "in": "payload",
                     "check": "$.sub",
-                    "is": "X_url_RP"
+                    is: "http://aac-provider.org:8080/auth/openidfed/metadata/70e62c3b-8006-47cc-a186-ea37bda004a9"
                   }
                 ]
               }

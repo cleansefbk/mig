@@ -25,7 +25,7 @@
                   {
                     "in": "payload",
                     "check": "$.metadata.openid_relying_party.response_types",
-                    "check regex": "^\\[\\s*\"[^\"]*\"(?:,\\s*\"[^\"]*\")*\\s*\\]$",
+                    "json schema compliant": "{ \"type\": \"array\" }",
                     "is present": "true"
                   }
                 ]
