@@ -73,7 +73,7 @@ services:
     privileged: true
 
   aac-provider.org:
-    image: aac
+    image: aac-rp
     volumes:
       - ../config/aac/bootstrap.yaml:/var/bootstrap.yaml
     ports:
