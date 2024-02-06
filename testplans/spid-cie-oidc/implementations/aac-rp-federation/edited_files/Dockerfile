@@ -14,6 +14,7 @@ RUN ls -al .
 RUN pip3 install --upgrade pip
 RUN pip3 install -e .
 RUN pip3 install "design-django-theme==v1.4.8"
+RUN pip3 install "cryptography==41.0.7"
 
 # let compose do this
 # WORKDIR /django-project/
