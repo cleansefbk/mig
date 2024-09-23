@@ -4,7 +4,7 @@
 		"description": "var1",
 		"type": "passive",
 		"sessions": [
-			"s1"
+			"session0"
 		],
 		"operations": [
 			{
@@ -13,11 +13,11 @@
 					{
 						"in": "var3",
 						"key_var3": "var4",
-						"is present": "true"
+						"is present": true
 					}
 				]
 			}
 		],
-		"result": "correct flow s1"
+		"result": "correct flow session0"
 	}
 }

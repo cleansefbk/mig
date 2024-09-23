@@ -24,7 +24,8 @@
                 "checks": [
                   {
                     "in": "payload",
-                    "check regex": "\"state\":\"([a-zA-Z0-9]{32})\""
+                    "check": "$",
+                    "json schema compliant": "{\"type\": \"object\", \"properties\": {\"state\": {\"type\": \"string\", \"pattern\": \"^[\\u0020-\\u007E]{32,}$\"}}, \"required\": [\"state\"]}"
                   }
                 ]
               }

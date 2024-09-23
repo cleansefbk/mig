@@ -24,7 +24,8 @@
                 "checks": [
                   {
                     "in": "payload",
-                    "check regex": "\"sub\":\"[a-zA-Z0-9]+\""
+                    "check": "$",
+                    "json schema compliant": "{\"type\": \"object\", \"properties\": {\"sub\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}}, \"required\": [\"sub\"]}"
                   }
                 ]
               }

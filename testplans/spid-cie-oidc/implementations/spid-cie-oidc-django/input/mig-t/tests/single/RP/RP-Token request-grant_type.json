@@ -19,8 +19,8 @@
             "checks": [
               {
                 "in": "body",
-                "is present": "true",
-                "check": "grant_type"
+                "is present": true,
+                "check regex": "grant_type"
               }
             ]
           }

@@ -19,8 +19,8 @@
             "checks": [
               {
                 "in": "body",
-                "is present": "true",
-                "check": "code"
+                "is present": true,
+                "check regex": "code"
               }
             ]
           }

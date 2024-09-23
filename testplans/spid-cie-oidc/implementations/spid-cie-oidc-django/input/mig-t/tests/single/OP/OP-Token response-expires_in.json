@@ -19,8 +19,8 @@
             "checks": [
               {
                 "in": "body",
-                "is present": "true",
-                "check": "expires_in"
+                "is present": true,
+                "check regex": "expires_in"
               }
             ]
           }

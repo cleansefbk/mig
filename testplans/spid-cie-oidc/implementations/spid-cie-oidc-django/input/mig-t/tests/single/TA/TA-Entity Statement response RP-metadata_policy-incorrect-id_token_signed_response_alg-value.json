@@ -15,16 +15,16 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response RP",
+            "message type": "Entity Statement response TA RP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode param": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
                     "in": "payload",
-                    "check": "$.metadata_policy.openid_relying_party.id_token_signed_response_alg.subset_of",
+                    "check": "$.metadata_policy.openid_relying_party.id_token_signed_response_alg.one_of",
                     "not contains": [
                       "none",
                       "HS256",
@@ -36,7 +36,8 @@
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

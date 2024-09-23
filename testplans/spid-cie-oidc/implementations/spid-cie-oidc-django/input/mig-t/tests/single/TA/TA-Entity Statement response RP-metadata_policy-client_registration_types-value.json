@@ -15,16 +15,16 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response RP",
+            "message type": "Entity Statement response TA RP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode param": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
                     "in": "payload",
-                    "check": "$.metadata_policy.openid_relying_party.client_registration_types.one_of",
+                    "check": "$.metadata_policy.openid_relying_party.client_registration_types.subset_of",
                     "is subset of": [
                       "automatic"
                     ]
@@ -33,7 +33,8 @@
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

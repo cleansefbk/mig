@@ -15,23 +15,24 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response OP",
+            "message type": "Entity Statement response TA OP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode regex": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
                     "in": "payload",
-                    "check": "$.metadata_policy.openid_provider.claims_parameter_supported.one_of",
+                    "check": "$.metadata_policy.openid_provider.claims_parameter_supported.value",
                     "is present": "true"
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

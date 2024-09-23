@@ -24,7 +24,8 @@
                 "checks": [
                   {
                     "in": "payload",
-                    "check regex": "\"iss\":\"http:\\/\\/(www\\.)?[-\\w@:%.\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-\\w()@:%\\+.~#?&\\/\\/=]*)\""
+                    "check": "$",
+                    "json schema compliant": "{\"type\": \"object\", \"properties\": {\"iss\": {\"type\": \"string\", \"format\": \"uri-reference\", \"pattern\": \"^https://\"}}, \"required\": [\"iss\"]}"
                   }
                 ]
               }

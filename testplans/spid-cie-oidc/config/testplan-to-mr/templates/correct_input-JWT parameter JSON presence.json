@@ -4,7 +4,7 @@
     "description": "var1",
     "type": "passive",
     "sessions": [
-      "s1"
+      "session0"
     ],
     "operations": [
       {
@@ -12,7 +12,7 @@
         "decode operations": [
           {
             "from": "var3",
-            "decode param": "var4",
+            "decode regex": "var4",
             "type": "jwt",
             "checks": [
               {
@@ -25,6 +25,6 @@
         ]
       }
     ],
-    "result": "correct flow s1"
+    "result": "correct flow session0"
   }
 }

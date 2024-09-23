@@ -4,17 +4,17 @@
     "description": "var1",
     "type": "passive",
     "sessions": [
-      "s1"
+      "session0"
     ],
     "operations": [
       {
         "message type": "var2",
-        "decode operation": [
+        "decode operations": [
           {
             "from": "var3",
             "decode param": "var4",
             "type": "jwt",
-            "decode operation": [
+            "decode operations": [
               {
                 "from": "jwt var5",
                 "type": "jwt",
@@ -26,6 +26,6 @@
         ]
       }
     ],
-    "result": "correct flow s1"
+    "result": "correct flow session0"
   }
 }

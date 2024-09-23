@@ -15,25 +15,27 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response OP",
+            "message type": "Entity Statement response TA OP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode param": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
                     "in": "payload",
                     "check": "$.metadata_policy.intermediary.grant_types_supported.subset_of",
                     "is subset of": [
-                      "refresh_token\",\"authorization_code"
+                      "refresh_token",
+                      "authorization_code"
                     ]
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

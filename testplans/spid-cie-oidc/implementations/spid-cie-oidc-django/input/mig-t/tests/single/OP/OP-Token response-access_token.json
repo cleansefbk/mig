@@ -19,8 +19,8 @@
             "checks": [
               {
                 "in": "body",
-                "is present": "true",
-                "check": "access_token"
+                "is present": true,
+                "check regex": "access_token"
               }
             ]
           }

@@ -15,7 +15,7 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response RP",
+            "message type": "Entity Statement response TA RP",
             "checks": [
               {
                 "in": "body",
@@ -24,7 +24,8 @@
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

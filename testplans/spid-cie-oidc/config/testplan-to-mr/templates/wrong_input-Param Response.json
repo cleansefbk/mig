@@ -4,29 +4,29 @@
     "description": "var1",
     "type": "active",
     "sessions": [
-      "s1"
+      "session0"
     ],
     "operations": [
       {
-        "session": "s1",
+        "session": "session0",
         "action": "start"
       },
       {
         "action": "intercept",
-        "from session": "s1",
+        "from session": "session0",
         "then": "forward",
         "message type": "var2",
-        "message operations": [
+        "edit operations": [
           {
             "from": "var3",
             "edit_var3": "var4",
-            "in": "var5"
+            "value": "var5"
           }
         ]
       },
       {
         "action": "intercept",
-        "from session": "s1",
+        "from session": "session0",
         "then": "forward",
         "message type": "var6",
         "checks": [

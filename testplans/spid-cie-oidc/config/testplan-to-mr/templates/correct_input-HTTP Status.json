@@ -4,7 +4,7 @@
     "description": "var1",
     "type": "passive",
     "sessions": [
-      "s1"
+      "session0"
     ],
     "operations": [
       {
@@ -17,7 +17,7 @@
           }
         ]
       }
-		],
-		"result": "correct flow s1"
-	}
+    ],
+    "result": "correct flow session0"
+  }
 }

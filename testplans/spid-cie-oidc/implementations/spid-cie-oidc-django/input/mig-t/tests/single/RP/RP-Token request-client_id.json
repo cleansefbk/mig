@@ -19,8 +19,8 @@
             "checks": [
               {
                 "in": "body",
-                "is present": "true",
-                "check": "client_id"
+                "is present": true,
+                "check regex": "client_id"
               }
             ]
           }

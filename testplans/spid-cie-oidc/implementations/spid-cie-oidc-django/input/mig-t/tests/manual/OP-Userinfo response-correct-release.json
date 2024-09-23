@@ -1,0 +1,182 @@
+{
+  "test suite": {
+    "name": "Single test",
+    "description": "One test only",
+    "filter messages": true
+  },
+  "tests": [
+    {
+      "test": {
+        "name": "Does the OP release only previously accepted information when presenting a refresh token",
+        "description": "In this test the offline_access flow is accomplished, obtaining a refresh token and an access token. After this, a UserInfo request is sent with the access token and the released information saved. Once obtained the information, a new token request is done with 'grant_type=refresh_token' and the refresh token inserted in the 'refresh_token' parameter. The access token included in the latter response is then taken, a UserInfo Request is made with it and the results compared. The last UserInfo Response must contain exactly the claims issued with the previous one",
+        "type": "active",
+        "sessions": [
+          "s1",
+          "s1.1"
+        ],
+        "operations": [
+          {
+            "session": "s1",
+            "action": "start"
+          },
+          {
+            "action": "intercept",
+            "from session": "s1",
+            "then": "forward",
+            "message type": "Authentication request",
+            "decode operations": [
+              {
+                "from": "url",
+                "decode param": "request",
+                "type": "jwt",
+                "edits": [
+                  {
+                    "jwt from": "payload",
+                    "jwt edit": "$.acr_values",
+                    "value": "https://www.spid.gov.it/SpidL1"
+                  },
+                  {
+                    "jwt from": "payload",
+                    "jwt remove": "$.claims.userinfo.*"
+                  },
+                  {
+                    "jwt from": "payload",
+                    "jwt add": "$.claims.userinfo",
+                    "key": "family_name",
+                    "value": ""
+                  },
+                  {
+                    "jwt from": "payload",
+                    "jwt add": "$.claims.userinfo",
+                    "key": "given_name",
+                    "value": ""
+                  },
+                  {
+                    "jwt from": "payload",
+                    "jwt add": "$.claims.userinfo",
+                    "key": "birthdate",
+                    "value": ""
+                  },
+                  {
+                    "jwt from": "payload",
+                    "jwt add": "$.claims.userinfo",
+                    "key": "https://attributes.eid.gov.it/fiscal_number",
+                    "value": ""
+                  },
+                  {
+                    "jwt sign": "X_key_core_RP"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "action": "intercept",
+            "from session": "s1",
+            "then": "forward",
+            "message type": "Token response",
+            "message operations": [
+              {
+                "from": "body",
+                "save": "(?<=\"refresh_token\": \")[^\"]+",
+                "as": "saved_refresh_token"
+              }
+            ]
+          },
+          {
+            "action": "intercept",
+            "from session": "s1",
+            "then": "forward",
+            "message type": "UserInfo response",
+            "decode operations": [
+              {
+                "jwe decrypt": "X_key_jwe",
+                "from": "body",
+                "type": "jwt",
+                "decode regex": "[^\\n\\r]*",
+                "decode operations": [
+                  {
+                    "from": "jwt payload",
+                    "decode regex": "[^\\n\\r]*",
+                    "type": "jwt",
+                    "checks": [
+                      {
+                        "in": "payload",
+                        "check": "$",
+                        "json schema compliant": "{\"type\": \"object\", \"properties\": {\"sub\":{}, \"iat\":{}, \"exp\":{}, \"aud\":{}, \"iss\":{}, \"family_name\": {}, \"given_name\": {}, \"birthdate\": {}, \"https://attributes.eid.gov.it/fiscal_number\": {}}, \"required\": [\"sub\", \"iss\", \"aud\", \"family_name\", \"given_name\", \"birthdate\", \"https://attributes.eid.gov.it/fiscal_number\"], \"additionalProperties\": false}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "session": "s1",
+            "action": "pause"
+          },
+          {
+            "session": "s1.1",
+            "action": "start"
+          },
+          {
+            "action": "intercept",
+            "from session": "s1.1",
+            "then": "forward",
+            "message type": "Token request",
+            "message operations": [
+              {
+                "from": "body",
+                "edit": "(?<=grant_type=)([^&]+)",
+                "in": "refresh_token"
+              },
+              {
+                "from": "body",
+                "add": "&refresh_token=",
+                "in": "&refresh_token="
+              },
+              {
+                "from": "body",
+                "add": "(?<=refresh_token=)([^&]+)",
+                "use": "saved_refresh_token"
+              }
+            ]
+          },
+          {
+            "action": "intercept",
+            "from session": "s1.1",
+            "then": "forward",
+            "message type": "UserInfo response",
+            "decode operations": [
+              {
+                "jwe decrypt": "X_key_jwe",
+                "from": "body",
+                "type": "jwt",
+                "decode regex": "[^\\n\\r]*",
+                "decode operations": [
+                  {
+                    "from": "jwt payload",
+                    "decode regex": "[^\\n\\r]*",
+                    "type": "jwt",
+                    "checks": [
+                      {
+                        "in": "payload",
+                        "check": "$",
+                        "json schema compliant": "{\"type\": \"object\", \"properties\": {\"sub\":{}, \"iat\":{}, \"exp\":{}, \"aud\":{}, \"iss\":{}, \"family_name\": {}, \"given_name\": {}, \"birthdate\": {}, \"https://attributes.eid.gov.it/fiscal_number\": {}}, \"required\": [\"sub\", \"iss\", \"aud\", \"family_name\", \"given_name\", \"birthdate\", \"https://attributes.eid.gov.it/fiscal_number\"], \"additionalProperties\": false}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "session": "s1",
+            "action": "resume"
+          }
+        ],
+        "result": "assert_only"
+      }
+    }
+  ]
+}

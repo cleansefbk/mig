@@ -15,11 +15,11 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response OP",
+            "message type": "Entity Statement response TA OP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode regex": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
@@ -31,7 +31,8 @@
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

@@ -1,0 +1,67 @@
+{
+  "test suite": {
+    "name": "Single test",
+    "description": "One test only",
+    "filter messages": true
+  },
+  "tests": [
+    {
+      "test": {
+        "name": "Does the issued JWT ID Token contain a correct 'alg' parameter in the Header",
+        "description": "In this test, the ID Token is taken from the Token Response, the header is base64url decoded and the presence of the 'alg' parameter in the Header is checked. The value must be an asymmetric algorithm between those defined in the 'id_token_signing_alg_values_supported' parameter of the OP's metadata",
+        "type": "active",
+        "sessions": [
+          "s1"
+        ],
+        "operations": [
+          {
+            "session": "s1",
+            "action": "start"
+          },
+          {
+            "action": "intercept",
+            "from session": "s1",
+            "then": "forward",
+            "message type": "Entity Configuration response OP",
+            "decode operations": [
+              {
+                "from": "body",
+                "decode param": "[^\\n\\r]*",
+                "type": "jwt",
+                "edits": [
+                  {
+                    "jwt from": "payload",
+                    "jwt save": "$.metadata.openid_provider.id_token_signing_alg_values_supported",
+                    "as": "valid_alg"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "action": "intercept",
+            "from session": "s1",
+            "then": "forward",
+            "message type": "Token response",
+            "decode operations": [
+              {
+                "from": "body",
+                "decode param": "(?<=\"id_token\": \")[^\"]+",
+                "type": "jwt",
+                "checks": [
+                  {
+                    "use variable": "true",
+                    "in": "header",
+                    "check": "$.alg",
+                    "is in": "valid_alg"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "result": "correct flow s1"
+      }
+    }
+  ]
+}

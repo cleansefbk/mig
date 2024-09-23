@@ -15,16 +15,16 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response OP",
+            "message type": "Entity Statement response TA OP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode param": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
                     "in": "payload",
-                    "check": "$.metadata_policy.openid_provider.token_endpoint_auth_methods_supported.one_of",
+                    "check": "$.metadata_policy.openid_provider.token_endpoint_auth_methods_supported.subset_of",
                     "is subset of": [
                       "private_key_jwt"
                     ]
@@ -33,7 +33,8 @@
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

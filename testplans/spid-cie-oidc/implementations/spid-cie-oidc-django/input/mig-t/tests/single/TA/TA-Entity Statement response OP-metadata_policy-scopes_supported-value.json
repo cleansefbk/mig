@@ -15,25 +15,29 @@
         ],
         "operations": [
           {
-            "message type": "Entity Statement response OP",
+            "message type": "Entity Statement response TA OP",
             "decode operations": [
               {
                 "from": "body",
-                "decode param": "[\\s\\S]*",
+                "decode param": "[^\\r\\n]*",
                 "type": "jwt",
                 "checks": [
                   {
                     "in": "payload",
                     "check": "$.metadata_policy.intermediary.scopes_supported.subset_of",
                     "is subset of": [
-                      "openid\",\"offline_access\",\"profile\",\"email"
+                      "openid",
+                      "offline_access",
+                      "profile",
+                      "email"
                     ]
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "result": "correct flow s1"
       }
     }
   ]

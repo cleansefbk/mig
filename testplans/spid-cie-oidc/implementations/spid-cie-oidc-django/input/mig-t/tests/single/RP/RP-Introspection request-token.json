@@ -11,7 +11,7 @@
         "description": "The Introspection request made by the RP is taken and the presence of the token parameter is checked.",
         "type": "passive",
         "sessions": [
-          "s1"
+          "s_CIE_introsp"
         ],
         "operations": [
           {
@@ -19,13 +19,13 @@
             "checks": [
               {
                 "in": "body",
-                "is present": "true",
-                "check": "token"
+                "is present": true,
+                "check regex": "token"
               }
             ]
           }
         ],
-        "result": "correct flow s1"
+        "result": "correct flow s_CIE_introsp"
       }
     }
   ]
